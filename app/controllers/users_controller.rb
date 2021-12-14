@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :destroy]
-  before_action :logged_in_user, only: [:index, :show, :destroy]
-  before_action :admin_user, only: [:index, :destroy]
+  before_action :set_user, only: [:show, :destroy, :edit_learner_info, :update_learner_info]
+  before_action :logged_in_user, only: [:index, :show, :destroy, :edit_learner_info, :update_learner_info]
+  before_action :admin_user, only: [:index, :destroy, :edit_learner_info, :update_learner_info]
 
   def show
     @user = User.find(params[:id])
@@ -27,6 +27,18 @@ class UsersController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit_learner_info
+  end
+
+  def update_learner_info
+    if @user.update(user_params)
+      flash[:success] = "ユーザー情報を更新しました。"
+    else
+      flash[:danger] = "ユーザー情報を更新できませんでした。"
+    end
+    redirect_to user_index_user_path
   end
 
   private

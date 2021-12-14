@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :userlessons
+  has_many :users, :through => :userlessons
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
 
