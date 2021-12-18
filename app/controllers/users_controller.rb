@@ -41,6 +41,13 @@ class UsersController < ApplicationController
     redirect_to user_index_user_path
   end
 
+  
+  def lesson_index
+    @user = User.find(params[:user_id])
+    @lessons = Lesson.all
+
+  end
+
   private
 
   def user_params

@@ -10,12 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_104835) do
+ActiveRecord::Schema.define(version: 2021_12_14_114128) do
 
   create_table "lessons", force: :cascade do |t|
     t.string "lesson_name"
-    t.string "user_id"
     t.integer "progeress_ratio"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "task_name"
+    t.datetime "planed_day"
+    t.datetime "completed_day"
+    t.string "lesson_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

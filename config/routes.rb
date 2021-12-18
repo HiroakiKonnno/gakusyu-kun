@@ -6,10 +6,12 @@ Rails.application.routes.draw do
 
   resources :users do
     member do
-      get :show
-      get :user_index
+      get 'show'
+      get 'user_index'
       get 'edit_learner_info'
       patch 'update_learner_info'
     end
+    resources :lessons
+    get 'lesson_index'
   end
 end
