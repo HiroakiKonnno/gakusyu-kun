@@ -17,7 +17,7 @@
       </tr>
       <tr>
         <td>
-        <%= link_to "削除", user_lesson_index_path, method: :delete,
+        <%= link_to "削除", lesson_path(lesson.id), method: :delete,
             data: { confirm: "削除してよろしいですか？" },
             class: "btn btn-danger" %>
         </td>

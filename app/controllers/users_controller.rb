@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def user_index
+  def index
     @users = User.paginate(page: params[:page])
   end
 
@@ -20,13 +20,19 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = '新規作成に成功しました。'
       if @user.admin?
-        redirect_to user_index_user_path(user.id)
+        redirect_to users_path
       else
         redirect_to @user
       end
     else
       render :new
     end
+  end
+
+  def destroy
+    @user.destroy
+    flash[:success] = "#{@user.name}のデータを削除しました。"
+    redirect_to users_url
   end
 
   def edit_learner_info
@@ -39,13 +45,6 @@ class UsersController < ApplicationController
       flash[:danger] = "ユーザー情報を更新できませんでした。"
     end
     redirect_to user_index_user_path
-  end
-
-  
-  def lesson_index
-    @user = User.find(params[:user_id])
-    @lessons = Lesson.all
-
   end
 
   private
