@@ -1,0 +1,13 @@
+<div class="nested-fields">
+    <td>
+      <%= f.text_field :task_name,value: nil %>
+      <% task_lesson_id = @lesson.id %>
+    </td>
+    <td>
+      <%= link_to_remove_association '削除', f, class: "btn btn-danger btn-label-basic-info",
+      data: {
+      association_insertion_node: '#detail-association-insertion-point',
+      association_insertion_method: 'after'
+      }%>
+    </td>
+</div>

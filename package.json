@@ -1,5 +1,14 @@
 {
   "name": "gakusyu-kun",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "@rails/webpacker": "5.4.3",
+    "cocoon": "github:nathanvda/cocoon#c24ba53",
+    "jquery": "^3.6.0",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3"
+  }
 }

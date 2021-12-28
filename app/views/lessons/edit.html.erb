@@ -1,0 +1,31 @@
+<% provide(:title, 'Edit Lessons') %>
+<h1>学習コース編集</h1>
+<div class="col-md-6 col-md-offset-3">
+  <h4>学習コース名</h4>
+  <%= form_with(model: @lesson, url: lesson_path, local: true, method: :patch) do |f| %>
+    <%= f.text_field :lesson_name, class: 'form-control' %>
+    <h4>タスク名</h4>
+      <% @lesson.tasks.each do |task| %>
+        <div>
+          <%= f.text_field :task_name, value: task.task_name %>
+          <td>
+          <%= link_to "削除", lessons_id_edit_task_id_path(id: task.id), method: :delete,
+              data: { confirm: "削除してよろしいですか？" },
+              class: "btn btn-danger" %>
+          </td>
+        </div>
+      <% end %>
+    <h5>新たに追加するタスク名</h5>
+    <div class="tasks">
+      <%= f.fields_for :tasks do |t| %>
+        <%= render "task_fields", f: t %>
+      <% end %>
+    </div>
+    <div class="col-10 mx-auto mt-2">
+      <%= link_to_add_association "追加ボタン", f, :tasks, class: "btn btn-success" %>
+    </div>
+    <div class="actions">
+      <%= f.submit "更新", class: "btn btn-primary btn-block btn-signup" %>
+    </div>
+  <% end %>
+</div>

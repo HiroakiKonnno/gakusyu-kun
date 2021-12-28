@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get '/signup', to: 'users#new'
   post   '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+  delete '/lessons/id/edit/task/id', to: 'lessons#destroy_task'
 
   resources :users do
     member do
@@ -10,5 +11,7 @@ Rails.application.routes.draw do
       patch 'update_learner_info'
     end
   end
-  resources :lessons
+  resources :lessons do
+    member do
+      get ''
 end

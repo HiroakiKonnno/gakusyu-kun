@@ -1,5 +1,6 @@
 class Lesson < ApplicationRecord
   has_many :userlessons
-  has_many :lessons, :through => :userlessons
-  has_many :tasks
+  has_many :users, :through => :userlessons
+  has_many :tasks, dependent: :destroy
+  accepts_nested_attributes_for :tasks
 end
