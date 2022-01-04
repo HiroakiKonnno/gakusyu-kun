@@ -1,1 +1,17 @@
 <% provide(:title, @user.name) %>
+<% @userlessons.each do |userlesson| %>
+  <% @lessons = Lesson.where(id: userlesson.lesson_id) %>
+  <% @lessons.each do |lesson| %>
+    <table class="table table-condensed table-hover" id="table-users">
+    <thead>
+      <tr>
+        <h4>受講コース</h4>
+      </tr>
+    </thead>
+    <td>
+      <tr>
+        <%= link_to lesson.lesson_name,users_user_id_lessons_id_path(id: lesson.id, user_id: userlesson.user_id) %>
+      </tr>
+    </td>
+  <% end %>
+<% end %>

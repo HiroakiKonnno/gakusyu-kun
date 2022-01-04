@@ -26,14 +26,24 @@ class LessonsController < ApplicationController
 
   def destroy_task
     @task = Task.find(params[:id])
-    @lesson_page = Lesson.find_by(@task.lesson_id)
+    @lesson_page = Lesson.find(@task.lesson_id)
     @task.destroy
     flash[:success] = "#{@task.task_name}のデータを削除しました。"
     redirect_to edit_lesson_path(@lesson_page)
   end
 
+  def destroy_user
+    @userlesson = Userlesson.find(params[:id])
+    @lesson_page = Lesson.find_by(id: @userlesson.lesson_id)
+    @user = User.find_by(id: @userlesson.id)
+    @userlesson.destroy
+    flash[:success] = "#{@user.name}のデータを削除しました。"
+    redirect_to edit_lesson_path(@lesson_page)
+  end
+
   def edit
     @lesson = Lesson.find(params[:id])
+    @userlessons = Userlesson.where(lesson_id: @lesson.id)
   end
 
   def update
@@ -49,7 +59,7 @@ class LessonsController < ApplicationController
   private
 
   def lesson_params
-    params.require(:lesson).permit(:id, :lesson_name, tasks_attributes: [:lesson_id, :task_name, :_destroy])
+    params.require(:lesson).permit(:id, :lesson_name, tasks_attributes: [:id, :lesson_id, :task_name], userlessons_attributes:[:id, :user_id, :lesson_id])
   end
 
 end

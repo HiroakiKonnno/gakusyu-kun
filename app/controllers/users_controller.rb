@@ -5,6 +5,28 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @userlessons = Userlesson.where(user_id: @user.id)
+  end
+
+  def user_lesson
+    @user = User.find(params[:user_id])
+    @lesson = Lesson.find(params[:id])
+  end
+
+  def user_lesson_index
+    @user = User.find(params[:user_id])
+    @lesson = Lesson.find(params[:id])
+    @tasks = @lesson.tasks
+    @percent = 
+  end
+
+  def user_task_update
+    time_params.each do|id, item|
+      task = Task.find(id)
+      task.update(item)
+    end
+    flash[:success] = "更新しました。"
+    redirect_to users_user_id_lessons_id_path(id: params[:lesson][:id], user_id: params[:lesson][:user_id] )
   end
 
   def index
@@ -51,6 +73,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def time_params
+    params.require(:lesson).permit(tasks: [:planed_day, :completed_day])[:tasks]
   end
 
   def set_user

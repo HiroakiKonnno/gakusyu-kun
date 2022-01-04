@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_many :userlessons
+  has_many :userlessons, dependent: :destroy
   has_many :lessons, :through => :userlessons
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
