@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_14_114128) do
+ActiveRecord::Schema.define(version: 2022_01_04_231925) do
 
   create_table "lessons", force: :cascade do |t|
     t.string "lesson_name"
-    t.integer "progeress_ratio"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.datetime "reported_day"
+    t.text "note", null: false
+    t.text "comment", null: false
+    t.time "study_time"
+    t.string "user_id"
+    t.boolean "confiramtion", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

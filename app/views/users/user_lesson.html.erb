@@ -16,5 +16,14 @@
         <%= link_to"タスク詳細", users_user_id_lessons_id_index_path(id: @lesson.id, user_id: @user.id), class: "btn btn-success"%>
       </h4>
     </div>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" aria-valuenow=<%= @percent.to_s %> aria-valuemin="0" aria-valuemax="100" style=<%= "width:" + @percent.to_s + "%;" %>> <%= @percent.floor %>% </div>
+    </div>
+    <div>
+      <h4>
+        学習時間
+      <%= link_to"学習時間詳細", "#", class: "btn btn-success"%>
+      </h4>
+    </div>
   </body>
 </html>

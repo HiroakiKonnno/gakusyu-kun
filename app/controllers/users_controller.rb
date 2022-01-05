@@ -11,13 +11,15 @@ class UsersController < ApplicationController
   def user_lesson
     @user = User.find(params[:user_id])
     @lesson = Lesson.find(params[:id])
+    @taskcomp = @lesson.tasks.where.not(completed_day: nil).count
+    @tasknum = @lesson.tasks.all.count
+    @percent = (@taskcomp.to_f / @tasknum.to_f)*100
   end
 
   def user_lesson_index
     @user = User.find(params[:user_id])
     @lesson = Lesson.find(params[:id])
     @tasks = @lesson.tasks
-    @percent = 
   end
 
   def user_task_update
@@ -26,7 +28,7 @@ class UsersController < ApplicationController
       task.update(item)
     end
     flash[:success] = "更新しました。"
-    redirect_to users_user_id_lessons_id_path(id: params[:lesson][:id], user_id: params[:lesson][:user_id] )
+    redirect_to users_user_id_lessons_id_path(id: params[:lesson][:id], user_id: params[:lesson][:user_id])
   end
 
   def index
