@@ -11,23 +11,24 @@
     </thead>
 
     <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to user.name, user %></td>
-      </tr>
+      <% count = user.reports.where(confiramtion: false).count %>
       <tr>
         <td>
-        <%= link_to "削除", user, method: :delete,
-            data: { confirm: "削除してよろしいですか？" },
-            class: "btn btn-danger" %>
+          <%= link_to user.name, user %>
+          <%= link_to "編集", edit_learner_info_user_path(user), remote: true, class: "btn btn-primary"%>
+          <%= link_to "削除", user, method: :delete,
+              data: { confirm: "削除してよろしいですか？" },
+              class: "btn btn-danger" %>
         </td>
       </tr>
       <tr>
         <td>
-          <%= link_to "編集", edit_learner_info_user_path(user), remote: true, class: "btn btn-primary"%>
-          <%= link_to "学習状況", "#", method: :delete,
-          class: "btn btn-primary"%>
-          <%= link_to "日報", "#", method: :delete,
-          class: "btn btn-primary"%>
+          <% if count == 0 %>
+            <%= link_to "日報", user_reports_path(user), class: "btn btn-success"%>
+          <% else %>
+            <%= link_to "日報", user_reports_path(user), class: "btn btn-warning"%>
+            <h5 style="color:red"><%= count %>件が未確認です</h5>
+          <% end %>
         </td>
       </tr>
     <% end %>

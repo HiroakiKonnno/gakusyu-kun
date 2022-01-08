@@ -1,0 +1,55 @@
+<% provide(:title, 'reports') %>
+<h1>日報</h1>
+
+<div class="col-md-10 col-md-offset-1">
+<%= will_paginate %>
+  <table class="table table-condensed table-hover" id="table-users">
+  <% if @user == logged_in? %>
+    <%= link_to"作成", new_user_report_path(@user), class: "btn btn-success"%>
+  <% end %>
+    <thead>
+      <tr>
+        <td>
+          <h4>日付</h4>
+        </td>
+      </tr>
+    </thead>
+
+    <% @reports.each do |report| %>
+      <tr>
+        <% if report.confiramtion == true %>
+          <td>
+            <h5>講師確認済み</h5>
+            <% if current_user.admin? %>
+              <%= link_to report.reported_day.strftime("%Y-%m-%d"), show_manager_user_report_path(id: report.id, user_id: @user.id) %>
+            <% elsif @user == current_user %>
+              <%= link_to report.reported_day.strftime("%Y-%m-%d"), user_report_path(id: report.id, user_id: @user.id) %>
+              <%= link_to "修正", edit_user_report_path(id: report.id), class: "btn btn-success" %>
+              <%= link_to "削除", user_report_path(id: report.id), method: :delete,
+              data: { confirm: "削除してよろしいですか？" },
+              class: "btn btn-danger" %>
+            <% else %>
+              redirect_to root_path
+            <% end %>
+          </td>
+        <% else %>
+          <td>
+            <h5 style="color:red">講師未確認</h5>
+            <% if current_user.admin? %>
+              <%= link_to report.reported_day.strftime("%Y-%m-%d"), show_manager_user_report_path(id: report.id, user_id: @user.id) %>
+            <% elsif @user == current_user %>
+              <%= link_to report.reported_day.strftime("%Y-%m-%d"), user_report_path(id: report.id, user_id: @user.id) %>
+              <%= link_to "修正", "#", class: "btn btn-success" %>
+              <%= link_to "削除", user_report_path(id: report.id), method: :delete,
+              data: { confirm: "削除してよろしいですか？" },
+              class: "btn btn-danger" %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+      </tr>
+    <% end %>
+  </table>
+  <%= will_paginate %>
+</div>
+

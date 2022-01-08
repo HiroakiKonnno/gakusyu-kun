@@ -1,0 +1,13 @@
+<% provide(:title, 'report') %>
+<h1><%= @report.reported_day.strftime("%Y-%m-%d") %>の日報への講師コメント記載</h1>
+<%= form_with(model: @report, url:update_show_manager_user_report_path, method: :patch ,local: true) do |f| %>
+  <h4>日報</h4>
+  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333;">
+    <%= @report.note %>
+  </div>
+
+  <h4>講師からのコメント追加</h4>
+  <%= f.text_area :comment, value: @report.comment, :size=>"60x10", class: 'form-control' %>
+  <%= f.hidden_field :confiramtion, :value => true %>
+  <%= f.submit "コメント送信", class: "btn btn-primary btn-block btn-signup" %>
+<% end %>

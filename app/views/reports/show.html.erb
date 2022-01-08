@@ -1,0 +1,17 @@
+<% provide(:title, 'report') %>
+<h1><%= @report.reported_day.strftime("%Y-%m-%d") %>の日報</h1>
+<%= form_with(model: @report, url:user_report_path, method: :patch ,local: true) do |f| %>
+  <h4>日報</h4>
+  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333;">
+    <%= @report.note %>
+  </div>
+
+  <h4>講師からのコメント</h4>
+  <% if @report.confiramtion == true %>
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333;">
+      <%= @report.comment %>
+    </div>
+  <% else %>
+    <h5>コメントはまだありません</h5>
+  <% end %>
+<% end %>

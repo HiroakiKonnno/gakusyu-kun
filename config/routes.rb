@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   patch 'users/user_id/lessons/lesson_id/tasks/id', to: 'users#user_task_update'
 
   resources :users do
+    resources :reports do
+      member do
+        get 'show_manager'
+        patch 'update_show_manager'
+      end
+    end
     member do
       get 'edit_learner_info'
       patch 'update_learner_info'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_04_231925) do
+ActiveRecord::Schema.define(version: 2022_01_05_002528) do
 
   create_table "lessons", force: :cascade do |t|
     t.string "lesson_name"
@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 2022_01_04_231925) do
 
   create_table "reports", force: :cascade do |t|
     t.datetime "reported_day"
-    t.text "note", null: false
-    t.text "comment", null: false
-    t.time "study_time"
+    t.text "note"
+    t.text "comment"
+    t.integer "study_time"
     t.string "user_id"
     t.boolean "confiramtion", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
