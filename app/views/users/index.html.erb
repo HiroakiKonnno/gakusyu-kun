@@ -1,9 +1,11 @@
 <% provide(:title, 'All Users') %>
 <h1>学習者リスト</h1>
-
 <div class="col-md-10 col-md-offset-1">
 <%= will_paginate %>
   <table class="table table-condensed table-hover" id="table-users">
+  <div>
+    <%= link_to "作成", new_user_path, class: "btn btn-primary"%>
+  </div>
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>

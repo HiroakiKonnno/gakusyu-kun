@@ -18,3 +18,5 @@
 //= require cocoon
 require('jquery')
 import "cocoon"
+import "chartkick/chart.js"
+

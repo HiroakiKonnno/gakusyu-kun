@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_05_002528) do
+ActiveRecord::Schema.define(version: 2022_01_16_072219) do
 
   create_table "lessons", force: :cascade do |t|
     t.string "lesson_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "month"
+  end
+
+  create_table "line_notifies", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -53,6 +59,7 @@ ActiveRecord::Schema.define(version: 2022_01_05_002528) do
     t.string "password_digest"
     t.string "remember_digest"
     t.boolean "admin"
+    t.datetime "month"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

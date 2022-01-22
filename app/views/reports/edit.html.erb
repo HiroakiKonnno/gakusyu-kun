@@ -5,7 +5,7 @@
     <%= form_with(model: @report, url:user_report_path, method: :patch ,local: true) do |f| %>
       <h5>作成日</h5>
       <%= f.date_field :reported_day, value: @report.reported_day.strftime("%Y-%m-%d"), class: 'form-control' %>
-      <h5>勉強時間</h5>
+      <h5>学習時間</h5>
       <%= f.number_field :study_time, value: @report.study_time , class: 'form-control' %>
       <h5>日報</h5>
       <%= f.text_area :note, value: @report.note, :size=>"60x10", class: 'form-control' %>

@@ -2,9 +2,8 @@
 <h1>日報</h1>
 
 <div class="col-md-10 col-md-offset-1">
-<%= will_paginate %>
   <table class="table table-condensed table-hover" id="table-users">
-  <% if @user == logged_in? %>
+  <% if @user == current_user %>
     <%= link_to"作成", new_user_report_path(@user), class: "btn btn-success"%>
   <% end %>
     <thead>
@@ -14,6 +13,13 @@
         </td>
       </tr>
     </thead>
+    <div>
+      <%= form_with(url:user_reports_path, local: true, method: :get) do |f| %>
+        <%= f.date_select :month, discard_day:true, use_month_numbers: true, :selected => @user.month %>
+        <%= f.hidden_field :user_id, :value => @user.id %>
+        <%= f.submit "検索" %>
+      <% end %>
+    </div>
 
     <% @reports.each do |report| %>
       <tr>
@@ -39,7 +45,7 @@
               <%= link_to report.reported_day.strftime("%Y-%m-%d"), show_manager_user_report_path(id: report.id, user_id: @user.id) %>
             <% elsif @user == current_user %>
               <%= link_to report.reported_day.strftime("%Y-%m-%d"), user_report_path(id: report.id, user_id: @user.id) %>
-              <%= link_to "修正", "#", class: "btn btn-success" %>
+              <%= link_to "修正", edit_user_report_path(id: report.id), class: "btn btn-success" %>
               <%= link_to "削除", user_report_path(id: report.id), method: :delete,
               data: { confirm: "削除してよろしいですか？" },
               class: "btn btn-danger" %>
@@ -50,6 +56,5 @@
       </tr>
     <% end %>
   </table>
-  <%= will_paginate %>
 </div>
 

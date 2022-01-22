@@ -59,7 +59,7 @@ class LessonsController < ApplicationController
   private
 
   def lesson_params
-    params.require(:lesson).permit(:id, :lesson_name, tasks_attributes: [:id, :lesson_id, :task_name], userlessons_attributes:[:id, :user_id, :lesson_id])
+    params.require(:lesson).permit(:id, :lesson_name, tasks_attributes: [:id, :lesson_id, :task_name], userlessons_attributes:[:id, :user_id, :lesson_id,:_destroy])
   end
 
 end

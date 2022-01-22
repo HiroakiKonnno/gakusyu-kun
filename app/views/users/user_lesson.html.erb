@@ -1,29 +1,52 @@
 <% provide(:title, @user.name) %>
 <html>
   <body>
-    <table border="1" width="23%">
+    <table border="1" width="40%">
       <tr>
         <td>名前: <%= @user.name %></td>
         <td>学習コース: <%= @lesson.lesson_name %></td>
       </tr>
     </table>
+        
     <div>
-      <h3>学習状況</h3>
+      <h3>
+        学習状況
+        <%= link_to"タスク詳細", users_user_id_lessons_id_index_path(id: @lesson.id, user_id: @user.id), class: "btn btn-success"%>
+        <%= link_to"日報", user_reports_path(user_id: @user.id), class: "btn btn-success"%>
+      </h3>
     </div>
     <div>
       <h4>
         進捗状況
-        <%= link_to"タスク詳細", users_user_id_lessons_id_index_path(id: @lesson.id, user_id: @user.id), class: "btn btn-success"%>
       </h4>
     </div>
     <div class="progress">
       <div class="progress-bar" role="progressbar" aria-valuenow=<%= @percent.to_s %> aria-valuemin="0" aria-valuemax="100" style=<%= "width:" + @percent.to_s + "%;" %>> <%= @percent.floor %>% </div>
     </div>
+    <%= form_with(url:users_user_id_lessons_id_path, local: true, method: :get) do |f| %>
+      <%= f.date_select :month, discard_day:true, use_month_numbers: true, :selected => @lesson.month %>
+      <%= f.hidden_field :user_id, :value => @user.id %>
+      <%= f.hidden_field :id, :value => @lesson.id %>
+      <%= f.submit "検索" %>
+    <% end %>
     <div>
       <h4>
         学習時間
-      <%= link_to"学習時間詳細", user_reports_path(user_id: @user.id), class: "btn btn-success"%>
       </h4>
+    </div>
+    <div class="studytime">
+    <table border="1" width="12%">
+    <tr>
+      <th><center>日にち</center></th>
+      <th><center>勉強時間</center></th>
+    </tr>
+      <% @reports.each do |report| %>
+        <tr>
+          <td><center><%= report.reported_day.strftime("%m-%d") %></center></td>
+          <td><center><%= report.study_time %>h</center></td>
+        </tr>
+      <% end %>
+    </table>
     </div>
   </body>
 </html>

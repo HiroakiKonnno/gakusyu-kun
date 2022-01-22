@@ -1,47 +1,86 @@
 <% provide(:title, 'UserTasks') %>
 <h1>タスク詳細</h1>
-<%= form_with(model: @lesson, url: users_user_id_lessons_lesson_id_tasks_id_path, local: true, method: :patch) do |f| %>
-  <div class="col-md-10 col-md-offset-1">
-    <table class="table table-condensed table-hover" id="table-users">
-      <thead>
-        <tr>
-          <td>
-            <h5>タスク</h5>
-          </td>
-          <td>
-            <h5>完了予定日</h5>
-          </td>
-          <td>
-            <h5>完了日</h5>
-          </td>
-        </tr>
-      </thead>
-      <% @tasks.each do |t| %>
-        <%= f.fields_for "tasks[]", t do |task| %>
+<% if @user == current_user %>
+  <%= form_with(model: @lesson, url: users_user_id_lessons_lesson_id_tasks_id_path, local: true, method: :patch) do |f| %>
+    <div class="col-md-10 col-md-offset-1">
+      <table class="table table-condensed table-hover" id="table-users">
+        <thead>
           <tr>
             <td>
-              <%= t.task_name %>
+              <h5>タスク</h5>
             </td>
             <td>
-              <% if t.planed_day.present? %>
-                <%= task.date_field :planed_day, value: t.planed_day.to_date, class: 'form-control' %>
-              <% else %>
-                <%= task.date_field :planed_day, class: 'form-control' %>
-              <% end %>
+              <h5>完了予定日</h5>
             </td>
             <td>
-              <% if t.completed_day.present? %>
-                <%= task.date_field :completed_day, value: t.completed_day.to_date, class: 'form-control' %>
-              <% else %>
-                <%= task.date_field :completed_day, class: 'form-control' %>
-              <% end %>
+              <h5>完了日</h5>
             </td>
           </tr>
+        </thead>
+        <% @tasks.each do |t| %>
+          <%= f.fields_for "tasks[]", t do |task| %>
+            <tr>
+              <td>
+                <%= t.task_name %>
+              </td>
+              <td>
+                <% if t.planed_day.present? %>
+                  <%= task.date_field :planed_day, value: t.planed_day.to_date, class: 'form-control' %>
+                <% else %>
+                  <%= task.date_field :planed_day, class: 'form-control' %>
+                <% end %>
+              </td>
+              <td>
+                <% if t.completed_day.present? %>
+                  <%= task.date_field :completed_day, value: t.completed_day.to_date, class: 'form-control' %>
+                <% else %>
+                  <%= task.date_field :completed_day, class: 'form-control' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </table>
-    <%= f.hidden_field :id, :value => @lesson.id %>
-    <%= f.hidden_field :user_id, :value => @user.id %>
-    <%= f.submit "更新", class: "btn btn-primary btn-block btn-signup" %>
-  </div>
+      </table>
+      <%= f.hidden_field :id, :value => @lesson.id %>
+      <%= f.hidden_field :user_id, :value => @user.id %>
+      <%= f.submit "更新", class: "btn btn-primary btn-block btn-signup" %>
+    </div>
+  <% end %>
+<% else %>
+<div class="col-md-10 col-md-offset-1">
+  <table class="table table-condensed table-hover" id="table-users">
+    <thead>
+      <tr>
+        <td>
+          <h5>タスク</h5>
+        </td>
+        <td>
+          <h5>完了予定日</h5>
+        </td>
+        <td>
+          <h5>完了日</h5>
+        </td>
+      </tr>
+    </thead>
+    <% @tasks.each do |t| %>
+      <tr>
+        <td>
+          <%= t.task_name %>
+        </td>
+        <% if t.planed_day.present? %>
+          <td>
+            <%= t.planed_day.strftime("%Y-%m-%d") %>
+          </td>
+        <% else %>
+          <td>
+          </td>
+        <% end %>
+        <% if t.completed_day.present? %>
+          <td>
+            <%= t.completed_day.strftime("%Y-%m-%d") %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
 <% end %>

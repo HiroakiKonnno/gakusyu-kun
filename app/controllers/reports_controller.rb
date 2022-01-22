@@ -22,7 +22,16 @@ class ReportsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @reports = @user.reports.paginate(page: params[:page])
+    @user.month = if params["month(1i)"]
+      DateTime.new(
+        params["month(1i)"].to_i,
+        params["month(2i)"].to_i,
+        params["month(3i)"].to_i
+      )
+    else
+      Time.now.strftime("%Y-%m-%d")
+    end
+    @reports = @user.reports.where(user_id: @user.id).where('reported_day Like?', "%#{@user.month.strftime("%Y-%m")}%").order(reported_day: "ASC")
   end
 
   def new
@@ -32,8 +41,10 @@ class ReportsController < ApplicationController
 
   def create
     @report = Report.new(report params)
+    @user = User.find(params[:user_id])
     if @report.save
       flash[:success] = '新規作成に成功しました。'
+      LineNotify.send("#{@user.name}の#{@report.reported_day.strftime("%Y-%m-%d")}の日報が作成されました")
       redirect_to user_reports_url
     else
       flash[:danger] = '新規作成に失敗しました。'

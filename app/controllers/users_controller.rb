@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :destroy, :edit_learner_info, :update_learner_info]
-  before_action :logged_in_user, only: [:index, :show, :destroy, :edit_learner_info, :update_learner_info]
+  before_action :logged_in_user, only: [:index, :show, :destroy, :edit_learner_info, :update_learner_info, :user_lesson]
   before_action :admin_user, only: [:index, :destroy, :edit_learner_info, :update_learner_info]
+  before_action :personal_user, only: [:user_lesson]
+  before_action :correct_user, only: [:show]
+  
 
   def show
     @user = User.find(params[:id])
@@ -14,6 +17,16 @@ class UsersController < ApplicationController
     @taskcomp = @lesson.tasks.where.not(completed_day: nil).count
     @tasknum = @lesson.tasks.all.count
     @percent = (@taskcomp.to_f / @tasknum.to_f)*100
+    @lesson.month = if params["month(1i)"]
+      DateTime.new(
+        params["month(1i)"].to_i,
+        params["month(2i)"].to_i,
+        params["month(3i)"].to_i
+      )
+    else
+      Time.now.strftime("%Y-%m-%d")
+    end
+    @reports = @user.reports.where(user_id: @user.id).where('reported_day Like?', "%#{@lesson.month.strftime("%Y-%m")}%").order(reported_day: "ASC")
   end
 
   def user_lesson_index
@@ -46,7 +59,7 @@ class UsersController < ApplicationController
       if @user.admin?
         redirect_to users_path
       else
-        redirect_to @user
+        redirect_to users_path
       end
     else
       render :new
@@ -95,11 +108,15 @@ class UsersController < ApplicationController
 
 
   def correct_user
-    redirect_to(root_url) unless current_user?(@user)
+    redirect_to(root_url) unless current_user?(@user)|| current_user.admin?
   end
 
   def admin_user
     redirect_to root_url unless current_user.admin?
+  end
+
+  def personal_user
+    redirect_to root_url unless current_user?(User.find(params[:user_id])) || current_user.admin?
   end
 
 end

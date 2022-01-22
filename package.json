@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "@rails/webpacker": "5.4.3",
+    "chart.js": "^3.7.0",
+    "chartkick": "^4.1.1",
     "cocoon": "github:nathanvda/cocoon#c24ba53",
     "jquery": "^3.6.0",
     "webpack": "^4.46.0",
