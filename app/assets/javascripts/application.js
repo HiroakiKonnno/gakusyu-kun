@@ -18,7 +18,6 @@
 //= require turbolinks
 //= require_tree .
 //= require cocoon
-require('jquery')
 import "cocoon"
 import "chartkick/chart.js"
 
