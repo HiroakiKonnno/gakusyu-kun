@@ -15,9 +15,3 @@ User.create!(name: "Sample User",
                password: password,
                password_confirmation: password)
 end
-
-10.times do |n|
-  lesson_name  = Faker::Name.name
-  Lesson.create!(lesson_name: lesson_name,
-  progeress_ratio: 10)
-end
