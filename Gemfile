@@ -1,11 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails',        '~> 6.1'
-gem 'bcrypt' # 今回追加するgemです
-gem 'faker' # この行を追加してください
+gem 'rails',        '~> 5.1.6'
+gem 'rails-i18n'
+gem 'bcrypt'
+gem 'faker'
 gem 'bootstrap-sass'
-gem 'will_paginate' # この行を追加してください。
-gem 'bootstrap-will_paginate' # この行を追加してください。
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'puma',         '~> 3.7'
 gem 'sass-rails',   '~> 5.0'
 gem 'uglifier',     '>= 1.3.0'
@@ -18,7 +19,7 @@ gem "webpacker"
 gem "chartkick"
 
 group :development, :test do
-  gem 'sqlite3'
+  gem 'sqlite3', '1.3.13'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -30,7 +31,7 @@ group :development do
 end
 
 group :production do
-  gem 'pg', '1.1'
+  gem 'pg', '0.20.0'
 end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
