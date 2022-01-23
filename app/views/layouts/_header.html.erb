@@ -5,30 +5,30 @@
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to "トップ", root_path %></li>
         <% if logged_in? %>
-        <% if current_user.admin? %>
-          <li><%= link_to "ユーザ一覧", users_path %></li>
-          <li><%= link_to "学習コース一覧", lessons_path %></li>
-        <% end %>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              アカウント <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-              <% if current_user.admin? %>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "ログアウト", logout_path, method: :delete %>
-                </li>
-              <% else %>
-                <li><%= link_to "個人ページ", current_user %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to "ログアウト", logout_path, method: :delete %>
-                </li>
-              <% end %>
-            </ul>
-          </li>
-        <% else %>
+          <% if current_user.admin? %>
+            <li><%= link_to "ユーザ一覧", users_path %></li>
+            <li><%= link_to "学習コース一覧", lessons_path %></li>
+          <% end %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                アカウント <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <% if current_user.admin? %>
+                  <li class="divider"></li>
+                  <li>
+                    <%= link_to "ログアウト", logout_path, method: :delete %>
+                  </li>
+                <% else %>
+                  <li><%= link_to "個人ページ", current_user %></li>
+                  <li class="divider"></li>
+                  <li>
+                    <%= link_to "ログアウト", logout_path, method: :delete %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% else %>
         <% end %>
       </ul>
     </nav>
