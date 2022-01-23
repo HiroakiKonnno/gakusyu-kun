@@ -1,4 +1,4 @@
-class CreateUserlessons < ActiveRecord::Migration[6.1]
+class CreateUserlessons < ActiveRecord::Migration[5.1]
   def change
     create_table :userlessons do |t|
       t.string :user_id

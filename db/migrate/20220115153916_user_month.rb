@@ -1,4 +1,4 @@
-class UserMonth < ActiveRecord::Migration[6.1]
+class UserMonth < ActiveRecord::Migration[5.1]
   def change
     add_column :users, :month, :datetime
   end

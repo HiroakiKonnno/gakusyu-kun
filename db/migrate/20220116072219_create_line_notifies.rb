@@ -1,4 +1,4 @@
-class CreateLineNotifies < ActiveRecord::Migration[6.1]
+class CreateLineNotifies < ActiveRecord::Migration[5.1]
   def change
     create_table :line_notifies do |t|
 
