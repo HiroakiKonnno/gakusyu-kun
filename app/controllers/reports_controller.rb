@@ -31,7 +31,7 @@ class ReportsController < ApplicationController
     else
       Time.now.strftime("%Y-%m-%d")
     end
-    @reports = @user.reports.where(user_id: @user.id).where('cast(reported_day) Like?', "%#{@user.month.strftime("%Y-%m")}%").order(reported_day: "ASC")
+    @reports = @user.reports.where(user_id: @user.id).where('cast(reported_day as text) Like?', "%#{@user.month.strftime("%Y-%m")}%").order(reported_day: "ASC")
   end
 
   def new
