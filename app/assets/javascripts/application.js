@@ -18,4 +18,6 @@
 //= require cocoon
 
 import "chartkick/chart.js"
-
+$(document).ready(function(){
+  $('.dropdown-toggle').dropdown();
+});
