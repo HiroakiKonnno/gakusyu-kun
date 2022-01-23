@@ -10,12 +10,12 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
 //= require jquery
-//= require bootstrap
-//= require turbolinks
+//= require rails-ujs
+//= require bootstrap-sprockets
 //= require_tree .
+//= require turbolinks
 //= require cocoon
-import "cocoon"
+
 import "chartkick/chart.js"
 
