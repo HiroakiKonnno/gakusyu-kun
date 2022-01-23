@@ -11,11 +11,11 @@
 // about supported directives.
 //
 //= require jquery
-//= require rails-ujs
-//= require bootstrap-sprockets
-//= require_tree .
-//= require turbolinks
 //= require cocoon
+//= require bootstrap-sprockets
+//= require rails-ujs
+//= require turbolinks
+//= require_tree .
 
 import "chartkick/chart.js"
 $(document).ready(function(){
