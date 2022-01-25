@@ -11,13 +11,8 @@
 // about supported directives.
 //
 //= require jquery
-//= require cocoon
 //= require bootstrap-sprockets
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
-
-import "chartkick/chart.js"
-$(document).ready(function(){
-  $('.dropdown-toggle').dropdown();
-});
+//= require cocoon
