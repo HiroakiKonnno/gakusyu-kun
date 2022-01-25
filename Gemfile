@@ -14,7 +14,8 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
-
+gem 'cocoon'
+gem "webpacker"
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
