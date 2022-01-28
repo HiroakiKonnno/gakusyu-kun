@@ -13,16 +13,17 @@ Rails.application.routes.draw do
   
 
   resources :users do
+    member do
+      get 'edit_learner_info'
+      patch 'update_learner_info'
+    end
     resources :reports do
       member do
         get 'show_manager'
         patch 'update_show_manager'
       end
     end
-    member do
-      get 'edit_learner_info'
-      patch 'update_learner_info'
-    end
-    resources :lessons
   end
+  
+  resources :lessons
 end
