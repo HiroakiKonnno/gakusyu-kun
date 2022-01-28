@@ -15,8 +15,7 @@ gem 'jquery-rails'
 gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'cocoon'
-gem "webpacker"
-gem "chartkick"
+
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
