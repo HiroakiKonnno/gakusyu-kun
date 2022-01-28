@@ -23,6 +23,5 @@ Rails.application.routes.draw do
       get 'edit_learner_info'
       patch 'update_learner_info'
     end
-  end
   resources :lessons
 end
