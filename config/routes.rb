@@ -23,5 +23,6 @@ Rails.application.routes.draw do
       get 'edit_learner_info'
       patch 'update_learner_info'
     end
-  resources :lessons
+    resources :lessons
+  end
 end
