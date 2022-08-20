@@ -1,0 +1,28 @@
+version: '3'
+services:
+  gakusyu-kun:
+    build: .
+    container_name: gakusyu-kun
+    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5000 -b '0.0.0.0'"
+    volumes:
+      - .:/gakusyu-kun
+    ports:
+      - 3000:5000
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+    environment:
+      TZ: "Asia/Tokyo"
+  db:
+    image: mysql:5.7
+    container_name: gakusyu-kun_db
+    volumes:
+      - db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '4567:4567'
+
+volumes:
+  db-volume:
