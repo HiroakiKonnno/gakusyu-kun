@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Which bundler?
           command: bundle -v
-      - ruby/bundle-install
+      - bundle instal
   
   test:
     docker:
