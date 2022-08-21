@@ -26,8 +26,8 @@ jobs:
   
   test:
     docker:
-      - image: circleci/ruby:3.1.0
-      - image: circleci/mysql:5.7
+      - image: ruby:3.1.0
+      - image: mysql:5.7
       enviroment:
         MYSQL_ROOT_PASSWORD: password
         MYSQL_DATABASE: db/test.sqlite3
