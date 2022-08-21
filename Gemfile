@@ -15,7 +15,7 @@ gem 'jquery-rails'
 gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'cocoon'
-gem 'therubyracer'
+gem 'execjs'
 
 
 group :development, :test do
