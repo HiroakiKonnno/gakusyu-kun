@@ -14,7 +14,6 @@ jobs:
     docker:
       - image: circleci/ruby:3.1.0
     working_directory: ~/Gakusyu-kun/src
-    executor: ruby/default
     steps:
       - checkout:
           path: ~/Gakusyu-kun
@@ -28,11 +27,11 @@ jobs:
     docker:
       - image: circleci/ruby:3.1.0
       - image: circleci/mysql:5.7
-        enviroment:
+        environment:
           MYSQL_ROOT_PASSWORD: password
           MYSQL_DATABASE: db/test.sqlite3
           MYSQL_USER: root
-    enviroment:
+    environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
