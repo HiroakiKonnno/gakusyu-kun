@@ -13,7 +13,7 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:3.1.0
-    working_directory: ~/Gakusyu-kun/app
+    working_directory: ~/Gakusyu-kun
     steps:
       - checkout:
           path: ~/Gakusyu-kun
@@ -32,7 +32,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    working_directory: ~/Gakusyu-kun/app
+    working_directory: ~/Gakusyu-kun
     steps:
       - checkout:
           path: ~/rails_docker
