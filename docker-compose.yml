@@ -13,7 +13,8 @@ services:
     tty: true
     stdin_open: true
     environment:
-      TZ: "Asia/Tokyo"
+      - EDITOR=vim
+      
   db:
     image: mysql:5.7
     container_name: gakusyu-kun_db
