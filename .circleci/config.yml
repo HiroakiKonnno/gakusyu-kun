@@ -36,6 +36,11 @@ jobs:
     steps:
       - checkout:
           path: ~/rails_docker
+
+      - restore_cache:
+              keys:
+                - v1-dependencies-{{ checksum "Gakusyu-kun/Gemfile.lock" }}
+                
       - ruby/install-deps
       - run:
           name: Database setup
@@ -44,9 +49,6 @@ jobs:
           name: test
           command: bundle exec rake test
 
-      - restore_cache:
-              keys:
-                - v1-dependencies-{{ checksum "Gakusyu-kun/Gemfile.lock" }}
 
 
 
