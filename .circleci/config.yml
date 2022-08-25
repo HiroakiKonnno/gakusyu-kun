@@ -17,9 +17,7 @@ jobs:
     steps:
       - checkout:
           path: ~/Gakusyu-kun
-      - run: brew upgrade sqlite3 
       - ruby/install-deps
-      
   
   test:
     docker:
