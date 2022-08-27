@@ -30,7 +30,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            gem install bundler -v 1.17.3
+            gem install bundler -v 2.3.21
             bundle install --jobs=4 --retry=3 --path vendor/bundle
       - save_cache:
           paths:
