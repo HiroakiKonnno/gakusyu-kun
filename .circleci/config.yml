@@ -1,67 +1,74 @@
-version: 2.1
-orbs:
-  ruby: circleci/ruby@0.1.2
-
+version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.2-node-browsers-legacy #rubyのversionに合ったコンテナ
+      - image: circleci/ruby:2.5.7-node-browsers
         environment:
-          - BUNDLER_VERSION: 2.1.4 # これがないとbundle installできない
-          - RAILS_ENV: 'test'
-          - DB_HOST: 127.0.0.1
+          BUNDLE_JOBS: 3
+          BUNDLE_RETRY: 3
+          BUNDLE_PATH: vendor/bundle
+          BUNDLER_VERSION: 1.17.3
+          RAILS_ENV: 'test'
+          MYSQL_HOST: 'db'
+          MYSQL_PASSWORD: 'password'
+          MYSQL_PORT: 3306
       - image: circleci/mysql:5.7
         environment:
-          - MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
-          - MYSQL_USER: root
-          - MYSQL_DB: ci_test # testのDB名指定
-          - MYSQL_ROOT_PASSWORD: rootpw
-    working_directory: ~/repo
+          MYSQL_USER: 'test'
+          MYSQL_ROOT_PASSWORD: 'password'
+          MYSQL_PASSWORD: 'password'
+          MYSQL_DATABASE: 'webapp_test'
+          MYSQL_HOST: 'db'
+        name: db
+    parallelism: 1
     steps:
-      # CI環境上の working_directory の値の場所にGitリポジトリをコピーする。
       - checkout
-
-      # dockerコンテナの立ち上げを待つ(これ不要かも…？？？）
-      - run:
-          name: wait for database
-          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 5m
-
-      # キャッシュがあれば、リストアする。テスト時間の短縮につながる。keysでリストアするキャッシュを複数指定
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
             - v1-dependencies-
-
-      # Bundle install dependencies
       - run:
-          name: Install dependencies
+          name: install dependencies
           command: |
-            gem install bundler -v 2.1.4
-            bundle install --path=vendor/bundle --jobs 4 --retry 3
-
-      # キャッシュする
+            gem install bundler -v 1.17.3
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
       - save_cache:
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
-            - vendor/bundle
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
-      # DBのセットアップ
+      - restore_cache:
+          keys:
+            - rails-demo-yarn-{{ checksum "yarn.lock" }}
+            - rails-demo-yarn-
+
       - run:
-          name: Database Setup
-          command: |
-            bundle exec rake db:create
-            bundle exec rake db:schema:load
+          name: install yarn
+          command: yarn install --cache-folder ~/.cache/yarn
 
-      # RSpecを実行
+      - save_cache:
+          key: rails-demo-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
+
       - run:
-          name: Run rspec
+          name: run tests
           command: |
-            bundle exec rspec --profile 10 \
-                              --format RspecJunitFormatter \ #gem 'rspec-junit-fomatter'が必要
-                              --out test_results/rspec.xml \
-                              --format progress \
-                              $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+            mkdir /tmp/test-results
+            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
+              circleci tests split --split-by=timings)"
+            bundle exec rspec \
+              --format progress \
+              --format RspecJunitFormatter \
+              --out /tmp/test-results/rspec.xml \
+              --format progress \
+              $TEST_FILES
 
-      # Save artifacts
       - store_test_results:
           path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results

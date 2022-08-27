@@ -16,7 +16,7 @@ gem 'turbolinks',   '~> 5'
 gem 'jbuilder',     '~> 2.5'
 gem 'cocoon'
 gem 'execjs'
-gem 'sqlite3', '~> 1.3.6'
+gem 'mysql2'
 
 
 group :development, :test do
