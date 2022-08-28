@@ -2,7 +2,7 @@ version: '3'
 services:
   gakusyu-kun:
     build: .
-    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    command: bundle exec puma -C config/puma.rb
     volumes:
       - .:/app
     ports:
@@ -14,8 +14,22 @@ services:
   db:
     image: mysql:5.7
     volumes:
-      - db-volume:/var/lib/mysql
+      - db-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
+  nginx:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/gakusyu-kun/public
+      - tmp-data:/gakusyu-kun/tmp
+    ports:
+      - 80:80
+    depends_on:
+      - gakusyu-kun
+
 volumes:
-  db-volume:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
