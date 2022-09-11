@@ -2,27 +2,34 @@ version: '3'
 services:
   gakusyu-kun:
     build: .
-    container_name: gakusyu-kun
-    command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 5000 -b '0.0.0.0'"
+    command: bundle exec puma -C config/puma.rb
     volumes:
-      - .:/gakusyu-kun
+      - .:/app
     ports:
-      - 3000:5000
+      - 3000:3000
     depends_on:
       - db
     tty: true
     stdin_open: true
-    environment:
-      TZ: "Asia/Tokyo"
   db:
     image: mysql:5.7
-    container_name: gakusyu-kun_db
     volumes:
-      - db-volume:/var/lib/mysql
+      - db-data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
+  nginx:
+    build:
+      context: containers/nginx
+    volumes:
+      - public-data:/gakusyu-kun/public
+      - tmp-data:/gakusyu-kun/tmp
     ports:
-      - '4567:4567'
+      - 80:80
+    depends_on:
+      - gakusyu-kun
 
 volumes:
-  db-volume:
+  public-data:
+  tmp-data:
+  log-data:
+  db-data:
